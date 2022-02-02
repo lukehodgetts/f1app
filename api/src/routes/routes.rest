@@ -1,0 +1,25 @@
+###
+
+@profession = constructor
+@year = 2021
+GET http://localhost:8080/constructorStanding
+Content-Type: application/json
+
+###
+
+@profession = driver
+@year = 2021
+GET http://localhost:8080/driverStanding
+Content-Type: application/json
+
+###
+
+GET http://localhost:8080/raceResult
+Content-Type: application/json
+
+###
+
+GET http://localhost:8080/season
+Content-Type: application/json
+
+###
