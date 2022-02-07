@@ -8,6 +8,7 @@ import driver from "./routes/driver";
 import constructor from "./routes/constructor";
 import race from "./routes/race";
 import season from "./routes/season";
+import mysql from "./routes/mysql";
 
 const app = express();
 app.use(cors());
@@ -19,10 +20,10 @@ db.on("open", () => console.log("connected to database"));
 
 app.use(express.json());
 
-// app.use("/constructorStanding", constructorStanding);
 app.use("/:year", driver);
 app.use("/:year", constructor);
 app.use("/race", race);
 app.use("/season", season);
+app.use("/mysql", mysql);
 
 app.listen(8080, () => console.log("Server Started"));

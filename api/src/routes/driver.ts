@@ -18,7 +18,10 @@ router.get("/driver", async (req, res) => {
   const driver = await axios.get(
     `http://ergast.com/api/f1/${params.year}/driverStandings.json`
   );
-  const data = { ...driver.data, type: "Driver" };
+  const data = {
+    ...driver.data.MRData.StandingsTable.StandingsLists[0],
+    type: "Driver",
+  };
   res.send(data);
 });
 

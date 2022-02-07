@@ -2,16 +2,15 @@ import { Body, Season } from "./index.styles";
 import season from "../../types/Season";
 
 interface Props {
-  data: season;
+  data: season[];
 }
 
 const Timeline: React.FC<Props> = ({ data }) => {
-  const sortedSeasons = [...data?.MRData.SeasonTable.Seasons || []].reverse();
   return (
     <Body>
-      {sortedSeasons &&
-        sortedSeasons.map((season) => {
-          return <Season key={season.season}>{season.season}</Season>;
+      {data &&
+        data.map((season) => {
+          return <Season key={season._id}>{season.year}</Season>;
         })}
     </Body>
   );

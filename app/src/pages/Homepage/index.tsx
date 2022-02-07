@@ -14,14 +14,14 @@ import Card from "../../components/Card";
 
 import { Wrapper } from "./index.styles";
 
-function Homepage() {
+const Homepage = () => {
   const [season, setSeason] = useState(2021);
-  const [profession, setProfession] = useState<Profession>("driver");
+  const [profession, setProfession] = useState<Profession>("constructor");
 
   const [
     { data: seasonData, loading: seasonLoading, error: seasonError },
     getSeasonData,
-  ] = useAxios<Season>(`${process.env.REACT_APP_API_URL}/season`);
+  ] = useAxios<Season[]>(`${process.env.REACT_APP_API_URL}/season`);
 
   const [
     {
@@ -34,25 +34,18 @@ function Homepage() {
     url: `${process.env.REACT_APP_API_URL}/${season}/${profession}`,
   });
 
-  const [
-    { data: raceData, loading: raceLoading, error: raceError },
-    getRaceData,
-  ] = useAxios<Race>(`${process.env.REACT_APP_API_URL}/season`);
+  if (seasonLoading || professionLoading) return <h1>loading</h1>;
+  if (seasonError || professionError) return <h1>error</h1>;
 
-  if (seasonLoading || professionLoading || raceLoading)
-    return <h1>loading</h1>;
-  if (seasonError || professionError || raceError) return <h1>error</h1>;
-
-  if (!seasonData || !professionData || !raceData) return <h1>no data</h1>;
+  if (!seasonData || !professionData) return <h1>no data</h1>;
 
   return (
     <Wrapper>
       <Header>hi</Header>
       <Timeline data={seasonData} />
       <SidePanel data={professionData} />
-      <Card data={raceData} />
     </Wrapper>
   );
-}
+};
 
 export default Homepage;

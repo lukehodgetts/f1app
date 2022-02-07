@@ -1,9 +1,6 @@
 interface Season {
-  MRData: {
-    SeasonTable: {
-      Seasons: [{ season: string }];
-    };
-  };
+  _id: string;
+  year: number;
 }
 
 export default Season;

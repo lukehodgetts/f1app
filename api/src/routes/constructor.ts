@@ -18,7 +18,10 @@ router.get("/constructor", async (req, res) => {
   const constructor = await axios.get(
     `http://ergast.com/api/f1/${params.year}/constructorStandings.json`
   );
-  const data = { ...constructor.data, type: "Constructor" };
+  const data = {
+    ...constructor.data.MRData.StandingsTable.StandingsLists[0],
+    type: "Constructor",
+  };
   res.send(data);
 });
 

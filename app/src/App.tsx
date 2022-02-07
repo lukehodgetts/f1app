@@ -3,7 +3,7 @@ import "./index.css"
 import Homepage from "./pages/Homepage";
 import Telemetry from "./pages/Telemetry";
 
-function App() {
+const App = () => {
   return (
     <Router>
       <Routes>
