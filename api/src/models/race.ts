@@ -4,7 +4,7 @@ interface Race extends Document {
   raceId: number;
   year: string;
   round: number;
-  circuitId: string;
+  circuit: string;
   name: string;
   date: string;
   time: string;
@@ -19,6 +19,7 @@ const raceSchema = new mongoose.Schema({
   year: {
     type: String,
     required: true,
+    index: true
   },
   round: {
     type: Number,

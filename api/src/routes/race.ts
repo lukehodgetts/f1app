@@ -5,15 +5,38 @@ import {
   Request,
   Response,
 } from "express";
-import axios from "axios";
-const router = Router();
+import Race from "../models/race";
+import Result from "../models/result";
+import Circuit from "../models/circuit";
+const router = Router({ mergeParams: true });
+
+interface Params {
+  year: string;
+}
 
 //get all
-router.get("/", async (req, res) => {
-  const results = await axios.get(
-    `http://ergast.com/api/f1/${req.body.year}/${req.body.round}/results.json`
-  );
-  res.send(results.data);
+router.get("/race", async (req, res) => {
+  const circuit = await Circuit.findOne({});
+
+  const params = req.params as Params;
+  const races = await Race.find({ year: params.year })
+    .sort({ round: "asc" })
+    .populate("circuit");
+  const raceIds = races.map(({ _id }) => _id);
+
+  const results = await Result.find({ race: { $in: raceIds } })
+    .populate("driver")
+    .populate("team")
+    .populate("status");
+
+  const response = races.map((race) => {
+    return {
+      ...race.toObject(),
+      results: results.filter((result) => race._id.equals(result.race)),
+    };
+  });
+
+  res.send(response);
 });
 
 export default router;

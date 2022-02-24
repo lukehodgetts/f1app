@@ -1,6 +1,6 @@
 interface Constructor {
   type: "Constructor";
-  ConstructorStandings: [
+  ConstructorStandings?: 
     {
       position: string;
       points: string;
@@ -9,8 +9,8 @@ interface Constructor {
         constructorId: string;
         name: string;
       };
-    }
-  ];
+    }[]
+  ;
 }
 
 export default Constructor;

@@ -22,8 +22,8 @@ app.use(express.json());
 
 app.use("/:year", driver);
 app.use("/:year", constructor);
-app.use("/race", race);
-app.use("/season", season);
+app.use("/:year", race);
+app.use("/", season);
 app.use("/mysql", mysql);
 
 app.listen(8080, () => console.log("Server Started"));

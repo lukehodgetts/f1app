@@ -8,18 +8,25 @@ import {
 import axios from "axios";
 import mongoose from "mongoose";
 import Season from "../models/season";
+import season from "../models/season";
 const router = Router();
 
-//get all
-router.get("/", async (req, res) => {
-  // const seasons = await axios.get(`${process.env.DATABASE_URL}/seasons`, {
-  //   params: {
-  //     limit: 73,
-  //   },
-  // });
+interface Query {
+  page: string;
+}
 
-  const seasons = await Season.find().sort({ year: 'desc' });
-  res.send(seasons);
+//get all
+router.get("/season", async (req, res) => {
+  // @ts-ignore
+  const query = req.query as Query;
+
+  const seasons = await Season.find()
+    .sort({ year: "desc" })
+    .skip(parseInt(query.page) * 10)
+    .limit(10);
+
+  const count = await Season.count();
+  res.send({seasons, count});
 });
 
 export default router;

@@ -1,10 +1,7 @@
 import mongoose, { Document } from "mongoose";
 
 interface Season extends Document {
-  constructorId: number;
-  constructorRef: string;
-  name: string;
-  nationality: string;
+  year: number;
   url: string;
 }
 

@@ -1,5 +1,8 @@
 import Race from "../models/race";
-import Circuit from "../models/circuit";
+import Driver from "../models/driver";
+import Constructor from "../models/constructor";
+import Status from "../models/status";
+import Result from "../models/result";
 
 import {
   NextFunction,
@@ -21,26 +24,47 @@ router.get("/alldata", async (req, res) => {
     database: "f1",
   });
 
-  const circuits = await Circuit.find();
+  const races = await Race.find();
+  const drivers = await Driver.find();
+  const constructors = await Constructor.find();
+  const statuses = await Status.find();
 
   const [rows, fields] = await connection.execute(
-    "select * from races order by date desc limit 2000"
+    "select * from results limit 30000"
   );
 
   //@ts-ignore
   const newData = rows.map((row) => {
     return {
-      ...row,
+      number: row.number,
+      grid: row.grid,
+      position: row.position,
+      positionText: row.positionText,
+      positionOrder: row.positionOrder,
+      points: row.points,
+      laps: row.laps,
+      time: row.time,
+      milliseconds: row.milliseconds,
+      fastestLap: row.fastestLap,
+      rank: row.rank,
+      fastestLapTime: row.fastestLapTime,
+      fastestLapSpeed: row.fastestLapSpeed,
       //@ts-ignore
-      circuit: circuits.find((circuit) => circuit.circuitId === row.circuitId)
-        ._id,
-      circuitId: undefined,
+      race: races.find((race) => race.raceId === row.raceId)._id,
+      //@ts-ignore
+      driver: drivers.find((driver) => driver.driverId === row.driverId)._id,
+      //@ts-ignore
+      team: constructors.find(
+        (constructor) => constructor.constructorId === row.constructorId
+      )._id,
+      //@ts-ignore
+      status: statuses.find((status) => status.statusId === row.statusId)._id,
     };
   });
 
   console.log(newData);
 
-  // await Race.insertMany(newData)
+  await Result.insertMany(newData);
 
   res.send("test");
 });

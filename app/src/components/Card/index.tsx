@@ -7,24 +7,29 @@ interface Props {
 }
 
 const Card: React.FC<Props> = ({ data }) => {
+  const fastestLapDriver = data.results.find(
+    (driver) => driver.rank === 1
+  );
+
   return (
     <Container>
-      <Title>{data.MRData.RaceTable.Races[0].raceName}</Title>
-      <Subtitle>{data.MRData.RaceTable.Races[0].Circuit.circuitName}</Subtitle>
+      <Title>{data.name}</Title>
+      <Subtitle>{data.circuit.name}</Subtitle>
       <Stat>
-        {data.MRData.RaceTable.Races[0].Results[0].Driver.givenName}{" "}
-        {data.MRData.RaceTable.Races[0].Results[0].Driver.familyName}
+        1st {data.results[0].driver.forename}{" "}
+        {data.results[0].driver.surname}
       </Stat>
       <Stat>
-        {data.MRData.RaceTable.Races[0].Results[0].Driver.givenName}{" "}
-        {data.MRData.RaceTable.Races[0].Results[0].Driver.familyName}
+        2nd {data.results[1].driver.forename}{" "}
+        {data.results[1].driver.surname}
       </Stat>
       <Stat>
-        {data.MRData.RaceTable.Races[0].Results[0].Driver.givenName}{" "}
-        {data.MRData.RaceTable.Races[0].Results[0].Driver.familyName}
+        3rd {data.results[2].driver.forename}{" "}
+        {data.results[2].driver.surname}
       </Stat>
       <Stat>
-        {data.MRData.RaceTable.Races[0].Results[0].FastestLap.Time.time}
+        Fastest Lap {fastestLapDriver?.driver.forename}{" "}
+        {fastestLapDriver?.driver.surname}
       </Stat>
     </Container>
   );

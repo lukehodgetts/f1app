@@ -1,48 +1,51 @@
 interface Race {
-  MRData: {
-    RaceTable: {
-      Races: [
-        {
-          season: string;
-          round: string;
-          raceName: string;
-          Circuit: {
-            circuitName: string;
-          };
-          date: string;
-          Results: [
-            {
-              number: string;
-              position: string;
-              points: string;
-              Driver: {
-                code: string;
-                givenName: string;
-                familyName: string;
-                nationality: string;
-              };
-              Constructor: {
-                name: string;
-              };
-              grid: string;
-              laps: string;
-              status: string;
-              FastestLap: {
-                rank: string;
-                lap: string;
-                Time: {
-                  time: string;
-                };
-                AverageSpeed: {
-                  speed: string;
-                };
-              };
-            }
-          ];
-        }
-      ];
-    };
+  _id: string;
+  raceId: number;
+  year: string;
+  round?: number;
+  circuit: {
+    name: string;
   };
+  name: string;
+  date: string;
+  time?: string;
+  url?: string;
+  results: {
+    driver: {
+      _id: string;
+      driverId: string;
+      driverRef: string;
+      number?: number;
+      code?: string;
+      forename: string;
+      surname: string;
+      dob: string;
+      nationality: string;
+      url: string;
+    };
+    team: {
+      _id: string;
+      constructorId: string;
+      constructorRef: string;
+      name: string;
+      nationality: string;
+      url: string;
+    };
+    number?: number;
+    grid: number;
+    position?: number;
+    points: number;
+    laps: number;
+    time?: string;
+    fastestLap?: number;
+    rank?: number;
+    fastestLapTime?: string;
+    status: {
+      _id: string;
+      statusId: number;
+      status: string;
+    };
+  }[];
 }
 
 export default Race;
