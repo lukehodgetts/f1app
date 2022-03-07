@@ -7,16 +7,16 @@ import Constructor from "../../types/Constructor";
 import SeasonResponse from "../../types/SeasonResponse";
 import Race from "../../types/Race";
 
-import Header from "../../components/Header";
+import Layout from "../../components/Layout";
 import Timeline from "../../components/Timeline";
 import SidePanel from "../../components/SidePanel";
 import Card from "../../components/Card";
 
-import { Wrapper, Body, MainContent, Races, Footer } from "./index.styles";
+import { Wrapper, Body, MainContent, Races } from "./index.styles";
 
 const Homepage = () => {
   const [season, setSeason] = useState(2021);
-  const [profession, setProfession] = useState<Profession>("constructor");
+  const [profession, setProfession] = useState<Profession>("driver");
   const [races, setRaces] = useState([]);
 
   const [seasonPage, setSeasonPage] = useState(0);
@@ -52,44 +52,43 @@ const Homepage = () => {
   if (!seasonData || !professionData) return <h1>no data</h1>;
 
   const validatePage = (direction: string) => {
-    console.log(direction);
     if (direction === "next") {
       setSeasonPage(seasonPage + 1);
     } else if (direction === "prev" && seasonPage !== 0) {
       setSeasonPage(seasonPage - 1);
     }
   };
-
   return (
-    <Wrapper>
-      <Body>
-        <Header heading={"f1app"} />
-        <Timeline
-          data={seasonData}
-          timelineOffset={seasonPage}
-          onSeasonClick={(season) => {
-            setSeason(season);
-          }}
-          onButtonClick={(direction) => {
-            validatePage(direction);
-          }}
-        />
-      </Body>
-      <MainContent>
-        <SidePanel
-          data={professionData}
-          onClick={(type) => {
-            setProfession(type);
-          }}
-        />
-        <Races>
-          {raceData?.map((race) => {
-            return <Card data={race} />;
-          })}
-        </Races>
-      </MainContent>
-      <Footer>made by buk</Footer>
-    </Wrapper>
+    <Layout heading="f1app">
+      <Wrapper>
+        <Body>
+          <Timeline
+            data={seasonData}
+            timelineOffset={seasonPage}
+            onSeasonClick={(season) => {
+              setSeason(season);
+            }}
+            onButtonClick={(direction) => {
+              validatePage(direction);
+            }}
+          />
+        </Body>
+        <MainContent>
+          <SidePanel
+            data={professionData}
+            onClick={(type) => {
+              setProfession(type);
+            }}
+            professionSelected={profession}
+          />
+          <Races>
+            {raceData?.map((race) => {
+              return <Card data={race} />;
+            })}
+          </Races>
+        </MainContent>
+      </Wrapper>
+    </Layout>
   );
 };
 

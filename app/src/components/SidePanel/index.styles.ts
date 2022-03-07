@@ -1,15 +1,13 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-  border: 5px solid black;
   margin: 10px;
 `;
 
 export const ButtonContainer = styled.div`
   display: flex;
+  justify-content: space-evenly;
 `;
-
-export const Button = styled.div``;
 
 export const Header = styled.div``;
 

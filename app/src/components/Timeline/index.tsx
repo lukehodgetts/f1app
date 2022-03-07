@@ -14,8 +14,6 @@ const Timeline: React.FC<Props> = ({
   onSeasonClick,
   onButtonClick,
 }) => {
-  console.log(10*timelineOffset)
-  console.log(data.count)
   return (
     <Body>
       {data && timelineOffset !== 0 ? (
@@ -31,7 +29,7 @@ const Timeline: React.FC<Props> = ({
             </Season>
           );
         })}
-      {data && 10 *( timelineOffset + 1) < data.count ? (
+      {data && 10 * (timelineOffset + 1) < data.count ? (
         <NextButton onClick={() => onButtonClick("next")}>next</NextButton>
       ) : (
         <div />

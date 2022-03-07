@@ -32,7 +32,11 @@ router.get("/race", async (req, res) => {
   const response = races.map((race) => {
     return {
       ...race.toObject(),
-      results: results.filter((result) => race._id.equals(result.race)),
+      results: results
+        .filter((result) => race._id.equals(result.race) && result.position)
+        .sort((a, b) => {
+          return a.position - b.position;
+        }),
     };
   });
 

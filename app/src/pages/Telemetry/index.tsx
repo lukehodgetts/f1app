@@ -1,5 +1,11 @@
+import Layout from "../../components/Layout";
+
 const Telemetry = () => {
-  return <div>test</div>;
+  return (
+    <Layout heading="telemetry">
+      <div>test</div>
+    </Layout>
+  );
 };
 
 export default Telemetry;

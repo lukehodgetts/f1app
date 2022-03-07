@@ -5,6 +5,7 @@ interface Race {
   round?: number;
   circuit: {
     name: string;
+    _id: string;
   };
   name: string;
   date: string;
