@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import useAxios from "axios-hooks";
 
 import Profession from "../../types/Profession";
@@ -15,6 +16,8 @@ import Card from "../../components/Card";
 import { Wrapper, Body, MainContent, Races } from "./index.styles";
 
 const Homepage = () => {
+  let navigate = useNavigate();
+
   const [season, setSeason] = useState(2021);
   const [profession, setProfession] = useState<Profession>("driver");
   const [races, setRaces] = useState([]);
@@ -58,6 +61,11 @@ const Homepage = () => {
       setSeasonPage(seasonPage - 1);
     }
   };
+
+  const navigateRace = (name: string, year: string) => {
+    navigate(`/race/${name}/${year}`);
+  };
+
   return (
     <Layout heading="f1app">
       <Wrapper>
@@ -83,7 +91,7 @@ const Homepage = () => {
           />
           <Races>
             {raceData?.map((race) => {
-              return <Card data={race} />;
+              return <Card data={race} onClick={navigateRace} />;
             })}
           </Races>
         </MainContent>

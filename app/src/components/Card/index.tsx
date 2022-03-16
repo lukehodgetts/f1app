@@ -5,15 +5,16 @@ import CardMedia from "@mui/material/CardMedia";
 import { CardActionArea } from "@mui/material";
 import Typography from "@mui/material/Typography";
 
-import images from "../../utils/images";
+import images from "../../utils/circuitImages";
 
 import { Body, Title, Subtitle, Stat } from "./index.styles";
 
 interface Props {
   data: Race;
+  onClick: (raceName: string, raceYear: string) => void;
 }
 
-const Card: React.FC<Props> = ({ data }) => {
+const Card: React.FC<Props> = ({ data, onClick }) => {
   const fastestLapDriver = data.results.find((driver) => driver.rank === 1);
   const findImage = (circuitId: string) => {
     let foundImage = Object.values(images).find((value) => {
@@ -23,7 +24,7 @@ const Card: React.FC<Props> = ({ data }) => {
   };
 
   return (
-    <CardContainer>
+    <CardContainer onClick={() => onClick(data.name, data.year)}>
       <CardActionArea>
         <CardMedia
           component="img"

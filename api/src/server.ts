@@ -7,6 +7,7 @@ import cors from "cors";
 import driver from "./routes/driver";
 import constructor from "./routes/constructor";
 import race from "./routes/race";
+import singleRace from "./routes/singleRace";
 import season from "./routes/season";
 import mysql from "./routes/mysql";
 
@@ -23,6 +24,7 @@ app.use(express.json());
 app.use("/:year", driver);
 app.use("/:year", constructor);
 app.use("/:year", race);
+app.use("/:year/:name", singleRace);
 app.use("/", season);
 app.use("/mysql", mysql);
 

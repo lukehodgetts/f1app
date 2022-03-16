@@ -1,6 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./index.css";
-import Header from "./components/Header"
 import Homepage from "./pages/Homepage";
 import Telemetry from "./pages/Telemetry";
 import Race from "./pages/Race";
@@ -24,6 +23,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Homepage />} />
           <Route path="/telemetry" element={<Telemetry />} />
+          <Route path="/race/:name/:year" element={<Race />} />
         </Routes>
       </Router>
     </ThemeProvider>
