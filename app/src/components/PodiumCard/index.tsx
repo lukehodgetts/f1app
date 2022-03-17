@@ -1,7 +1,7 @@
 import CardContainer from "@mui/material/Card";
 import CardMedia from "@mui/material/CardMedia";
 import Box from "@mui/material/Box";
-import Stack from '@mui/material/Stack';
+import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 
 interface Props {
@@ -25,8 +25,13 @@ const PodiumCard: React.FC<Props> = ({ image, name, position }) => {
   return (
     <CardContainer>
       <Box position="relative">
-        <Stack position="absolute" direction="column" justifyContent="space-between" height="100%">
-          {position === "1" && <Typography>winner</Typography>}
+        <Stack
+          position="absolute"
+          direction="column"
+          justifyContent="space-between"
+          height="100%"
+        >
+          <Typography>{name}</Typography>
           <Typography>{convertPosition(position)}</Typography>
         </Stack>
         <CardMedia component="img" image={image} alt={`image of ${name}`} />
