@@ -16,7 +16,6 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 
 import driverImages from "../../utils/driverImages";
@@ -28,19 +27,22 @@ const Race = () => {
     `${process.env.REACT_APP_API_URL}/${year}/${name}/singleRace`
   );
 
-  if (loading) return <h1>loading</h1>;
+  if (loading || !data) return <h1>loading</h1>;
   if (error) return <h1>error</h1>;
 
   const findImage = (id: string, type: ImageType) => {
     let foundImage = Object.values(
       type === "driver" ? driverImages : circuitImages
     ).find((value) => {
-      return type === "driver" ? value.driverId === id : value.circuitId === id
+      return type === "driver" ? value.driverId === id : value.circuitId === id;
     });
     return foundImage?.image;
   };
 
+  const fastestLap = data.results.find((driver) => driver.rank === 1);
+
   console.log(data);
+  console.log(fastestLap?.fastestLapTime);
 
   return (
     <>
@@ -62,12 +64,16 @@ const Race = () => {
                       {data.results.map((driver) => (
                         <TableRow key={driver.driver.driverId}>
                           <TableCell component="th" scope="row">
-                            {driver.position}
+                            {driver.position === 100 ? "DNF" : driver.position}
                           </TableCell>
                           <TableCell align="center">
                             {driver.driver.forename} {driver.driver.surname}
                           </TableCell>
-                          <TableCell align="right">{driver.time}</TableCell>
+                          <TableCell align="right">
+                            {driver.time === null
+                              ? driver.status.status
+                              : driver.time}
+                          </TableCell>
                         </TableRow>
                       ))}
                     </TableBody>
@@ -86,11 +92,20 @@ const Race = () => {
                     </Grid>
                   );
                 })}
-                <Grid item>
+                {fastestLap && (
+                  <Grid item xs={4}>
+                    <PodiumCard
+                      name={`${fastestLap.driver.forename} ${fastestLap.driver.surname}`}
+                      fastestLapTime={fastestLap.fastestLapTime}
+                      image={findImage(fastestLap.driver._id, "driver")!}
+                    />
+                  </Grid>
+                )}
+                <Grid item xs={4}></Grid>
+                <Grid item xs={4}>
                   <Card>
                     <CardMedia
                       component="img"
-                      height="140"
                       image={findImage(data.circuit._id, "circuit")!}
                       alt={`image of ${data.circuit.name}`}
                     />

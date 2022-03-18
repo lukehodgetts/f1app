@@ -23,7 +23,7 @@ router.get("/singleRace", async (req, res) => {
     name: params.name,
   }).populate("circuit");
 
-  if (!race) return res.status(404).send("race not found")
+  if (!race) return res.status(404).send("race not found");
 
   const results = await Result.find({ race: race.id })
     .populate("driver")
@@ -33,7 +33,11 @@ router.get("/singleRace", async (req, res) => {
   const response = {
     ...race.toObject(),
     results: results
-      .filter((result) => race._id.equals(result.race) && result.position)
+      .filter((result) => race._id.equals(result.race))
+      .map((result) => ({
+        ...result.toObject(),
+        position: result.position || 100,
+      }))
       .sort((a, b) => {
         return a.position - b.position;
       }),

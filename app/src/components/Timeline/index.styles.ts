@@ -32,6 +32,10 @@ export const PrevButton = styled.div`
   justify-content: center;
   background-color: #e10600;
   color: white;
+  :hover {
+    background-color: #00000f;
+    cursor: pointer;
+  }
 `;
 
 export const NextButton = styled.div`
@@ -41,4 +45,8 @@ export const NextButton = styled.div`
   justify-content: center;
   background-color: #e10600;
   color: white;
+  :hover {
+    background-color: #00000f;
+    cursor: pointer;
+  }
 `;
