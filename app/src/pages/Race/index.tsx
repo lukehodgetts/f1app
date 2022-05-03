@@ -1,8 +1,9 @@
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import useAxios from "axios-hooks";
 
 import RaceType from "../../types/Race";
 import ImageType from "../../types/Image";
+import Category from "../../types/Category";
 
 import Layout from "../../components/Layout";
 import PodiumCard from "../../components/PodiumCard";
@@ -22,6 +23,7 @@ import driverImages from "../../utils/driverImages";
 import circuitImages from "../../utils/circuitImages";
 
 const Race = () => {
+  let navigate = useNavigate();
   let { name, year } = useParams();
   const [{ data, loading, error }, refetch] = useAxios<RaceType>(
     `${process.env.REACT_APP_API_URL}/${year}/${name}/singleRace`
@@ -41,13 +43,28 @@ const Race = () => {
 
   const fastestLap = data.results.find((driver) => driver.rank === 1);
 
+  const navigateSearch = (name: string, type: Category) => {
+    navigate(`/${type}/${name}`);
+  };
+
+  const searchData: { name: string; type: Category }[] = [
+    { name: "lecleric", type: "driver" },
+    { name: "max", type: "driver" },
+    { name: "silverstone", type: "gp" },
+    { name: "toto", type: "constructor" },
+  ];
+
   console.log(data);
   console.log(fastestLap?.fastestLapTime);
 
   return (
     <>
       {data && (
-        <Layout heading={`${data.year} ${data.name}`}>
+        <Layout
+          heading={`${data.year} ${data.name}`}
+          searchData={searchData}
+          onResultClick={navigateSearch}
+        >
           <Box margin="10px">
             <Grid container spacing={2} height="100%">
               <Grid item xs={5}>

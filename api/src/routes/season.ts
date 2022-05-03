@@ -8,7 +8,6 @@ import {
 import axios from "axios";
 import mongoose from "mongoose";
 import Season from "../models/season";
-import season from "../models/season";
 const router = Router();
 
 interface Query {
@@ -16,7 +15,7 @@ interface Query {
 }
 
 //get all
-router.get("/season", async (req, res) => {
+router.get("/", async (req, res) => {
   // @ts-ignore
   const query = req.query as Query;
 
@@ -26,7 +25,7 @@ router.get("/season", async (req, res) => {
     .limit(10);
 
   const count = await Season.count();
-  res.send({seasons, count});
+  res.send({ seasons, count });
 });
 
 export default router;

@@ -30,6 +30,7 @@ const constructorSchema = new mongoose.Schema({
     required: true,
   },
 });
+constructorSchema.index({ name: "text" });
 
 export default mongoose.model<Constructor>(
   "Constructor",

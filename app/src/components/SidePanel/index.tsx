@@ -99,28 +99,6 @@ const SidePanel: React.FC<Props> = ({ data, onClick, professionSelected }) => {
           </Table>
         </TableContainer>
       )}
-      {/* 
-      <Body>
-        {data &&
-          data.type === "Driver" &&
-          data.DriverStandings.map((driver) => (
-            <Entry key={driver.Driver.driverId}>
-              {driver.position} {driver.Driver.givenName}{" "}
-              {driver.Driver.familyName} {driver.points}
-            </Entry>
-          ))}
-        {data &&
-          data.type === "Constructor" &&
-          data.ConstructorStandings?.map((constructor) => (
-            <Entry>
-              {constructor.position} {constructor.Constructor.name}{" "}
-              {constructor.points}
-            </Entry>
-          ))}
-        {data &&
-          data.type === "Constructor" &&
-          (data.ConstructorStandings?.length || 0) < 1 && <h1>hi</h1>}
-      </Body> */}
     </Container>
   );
 };

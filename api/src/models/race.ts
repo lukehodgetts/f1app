@@ -19,7 +19,7 @@ const raceSchema = new mongoose.Schema({
   year: {
     type: String,
     required: true,
-    index: true
+    index: true,
   },
   round: {
     type: Number,
@@ -47,5 +47,6 @@ const raceSchema = new mongoose.Schema({
     required: true,
   },
 });
+raceSchema.index({ name: "text" });
 
 export default mongoose.model<Race>("Race", raceSchema, "races");

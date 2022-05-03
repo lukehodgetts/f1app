@@ -1,9 +1,7 @@
-import {Body} from "./index.styles"
+import { Body } from "./index.styles";
 
 const Footer = () => {
-  return (
-    <Body>made by buk</Body>
-  )
-}
+  return <Body>made by luke</Body>;
+};
 
-export default Footer
+export default Footer;

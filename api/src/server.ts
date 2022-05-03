@@ -4,11 +4,9 @@ import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 
-import driver from "./routes/driver";
-import constructor from "./routes/constructor";
-import race from "./routes/race";
-import singleRace from "./routes/singleRace";
+import year from "./routes/year";
 import season from "./routes/season";
+import search from "./routes/search";
 import mysql from "./routes/mysql";
 
 const app = express();
@@ -21,11 +19,9 @@ db.on("open", () => console.log("connected to database"));
 
 app.use(express.json());
 
-app.use("/:year", driver);
-app.use("/:year", constructor);
-app.use("/:year", race);
-app.use("/:year/:name", singleRace);
-app.use("/", season);
+app.use("/:year", year);
+app.use("/season", season);
+app.use("/search", search);
 app.use("/mysql", mysql);
 
 app.listen(8080, () => console.log("Server Started"));
