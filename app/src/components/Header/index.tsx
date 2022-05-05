@@ -10,16 +10,27 @@ import {
 import { color } from "@mui/system";
 
 import Category from "../../types/Category";
+import SearchResponse from "../../types/SearchResponse";
 
 interface Props {
   heading: string;
-  data: { name: string; type: Category }[];
-  onResultClick: (name: string, type: Category) => void;
+  data: SearchResponse;
+  onResultClick: (
+    name: string,
+    ref: string,
+    type: Category,
+    _id: string
+  ) => void;
+  onChange: (input: string) => void;
 }
 
-const Header: React.FC<Props> = ({ heading, data, onResultClick }) => {
+const Header: React.FC<Props> = ({
+  heading,
+  data,
+  onResultClick,
+  onChange,
+}) => {
   console.log(data);
-
   return (
     <AppBar position="static">
       <Toolbar>
@@ -34,8 +45,11 @@ const Header: React.FC<Props> = ({ heading, data, onResultClick }) => {
             sx={{ padding: "0 250px" }}
             renderInput={(params) => <TextField {...params} label="Search" />}
             getOptionLabel={(params) => params.name}
-            //@ts-ignore
-            onChange={(event, value) => onResultClick(value.name, value.type)}
+            onChange={(event, value) =>
+              //@ts-ignore
+              onResultClick(value.name, value.ref, value.type, value._id)
+            }
+            onInputChange={(event, value) => onChange(value)}
           />
         </Container>
         <Button color="inherit" size="large" href="/">

@@ -21,13 +21,29 @@ import CardMedia from "@mui/material/CardMedia";
 
 import driverImages from "../../utils/driverImages";
 import circuitImages from "../../utils/circuitImages";
+import SearchResponse from "../../types/SearchResponse";
+
+import { useState } from "react";
 
 const Race = () => {
   let navigate = useNavigate();
   let { name, year } = useParams();
+
+  const [searchText, setSearchText] = useState("");
+
   const [{ data, loading, error }, refetch] = useAxios<RaceType>(
     `${process.env.REACT_APP_API_URL}/${year}/${name}/singleRace`
   );
+
+  const [
+    { data: searchData, loading: searchLoading, error: searchError },
+    getSearchData,
+  ] = useAxios<SearchResponse>({
+    url: `${process.env.REACT_APP_API_URL}/search`,
+    params: {
+      searchText: searchText,
+    },
+  });
 
   if (loading || !data) return <h1>loading</h1>;
   if (error) return <h1>error</h1>;
@@ -43,11 +59,16 @@ const Race = () => {
 
   const fastestLap = data.results.find((driver) => driver.rank === 1);
 
-  const navigateSearch = (name: string, type: Category) => {
-    navigate(`/${type}/${name}`);
+  const navigateSearch = (
+    name: string,
+    ref: string,
+    type: Category,
+    _id: string
+  ) => {
+    navigate(`/${type}/${ref}`);
   };
 
-  const searchData: { name: string; type: Category }[] = [
+  const testSearchData: { name: string; type: Category }[] = [
     { name: "lecleric", type: "driver" },
     { name: "max", type: "driver" },
     { name: "silverstone", type: "gp" },
@@ -62,8 +83,9 @@ const Race = () => {
       {data && (
         <Layout
           heading={`${data.year} ${data.name}`}
-          searchData={searchData}
+          searchData={searchData || []}
           onResultClick={navigateSearch}
+          onChange={(input) => setSearchText(input)}
         >
           <Box margin="10px">
             <Grid container spacing={2} height="100%">

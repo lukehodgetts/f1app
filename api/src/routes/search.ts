@@ -17,16 +17,51 @@ router.get("/", async (req, res) => {
   if (typeof query.search !== "string") return res.status(500);
 
   const search = new RegExp(query.search, "i");
-  const constructorResults = await Constructor.find({ name: search });
-  const raceResults = await Race.find({ name: search });
-  const driverResults = await Driver.aggregate([
+
+  const constructorResults = await Constructor.aggregate([
     {
       $addFields: {
-        fullName: { $concat: ["$forename", " ", "$surname"] },
+        type: "constructor",
       },
     },
     {
-      $match: { fullName: search },
+      $match: { name: search },
+    },
+    {
+      $project: { _id: 1, name: 1, ref: "$constructorRef", type: 1 },
+    },
+  ]);
+  const raceResults = await Race.aggregate([
+    {
+      $addFields: {
+        type: "gp",
+      },
+    },
+    {
+      $match: { name: search },
+    },
+    {
+      $project: { _id: 1, name: 1, type: 1 },
+    },
+    {
+      $group: { _id: "$name", doc: { $first: "$$ROOT" } },
+    },
+    {
+      $replaceRoot: { newRoot: "$doc" },
+    },
+  ]);
+  const driverResults = await Driver.aggregate([
+    {
+      $addFields: {
+        name: { $concat: ["$forename", " ", "$surname"] },
+        type: "driver",
+      },
+    },
+    {
+      $match: { name: search },
+    },
+    {
+      $project: { _id: 1, name: 1, ref: "$driverRef", type: 1 },
     },
   ]);
 

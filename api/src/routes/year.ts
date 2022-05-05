@@ -17,7 +17,7 @@ interface BaseParams {
   year: string;
 }
 
-//get constructor
+//get constructor standings
 router.get("/constructor", async (req, res) => {
   const params = req.params as BaseParams;
   const constructor = await axios.get(
@@ -30,7 +30,7 @@ router.get("/constructor", async (req, res) => {
   res.send(data);
 });
 
-//get driver
+//get driver standings
 router.get("/driver", async (req, res) => {
   const params = req.params as BaseParams;
   const driver = await axios.get(

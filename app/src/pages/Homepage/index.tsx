@@ -1,6 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import useAxios from "axios-hooks";
+import { useDebounce } from "use-debounce";
+import useSearch from "../../hooks/useSearch";
 
 import Profession from "../../types/Profession";
 import Driver from "../../types/Driver";
@@ -8,6 +10,7 @@ import Constructor from "../../types/Constructor";
 import SeasonResponse from "../../types/SeasonResponse";
 import Race from "../../types/Race";
 import Category from "../../types/Category";
+import SearchResponse from "../../types/SearchResponse";
 
 import Layout from "../../components/Layout";
 import Timeline from "../../components/Timeline";
@@ -24,6 +27,9 @@ const Homepage = () => {
   const [races, setRaces] = useState([]);
 
   const [seasonPage, setSeasonPage] = useState(0);
+  const [searchText, setSearchText] = useState("");
+
+  const [debouncedSearchText] = useDebounce(searchText, 300);
 
   const [
     { data: seasonData, loading: seasonLoading, error: seasonError },
@@ -51,10 +57,16 @@ const Homepage = () => {
     getRaceData,
   ] = useAxios<Race[]>(`${process.env.REACT_APP_API_URL}/${season}/race`);
 
-  const [
-    { data: searchData, loading: searchLoading, error: searchError },
-    getSearchData,
-  ] = useAxios<Race[]>(`${process.env.REACT_APP_API_URL}/search`);
+  const {
+    data: searchData,
+    loading: searchLoading,
+    error: searchError,
+    refetch: getSearchData,
+  } = useSearch(searchText);
+
+  useEffect(() => {
+    if (debouncedSearchText.length > 0) getSearchData();
+  }, [debouncedSearchText]);
 
   const validatePage = (direction: string) => {
     if (direction === "next") {
@@ -68,22 +80,23 @@ const Homepage = () => {
     navigate(`/race/${name}/${year}`);
   };
 
-  const navigateSearch = (name: string, type: Category) => {
-    navigate(`/${type}/${name}`);
+  const navigateSearch = (
+    name: string,
+    ref: string,
+    type: Category,
+    _id: string
+  ) => {
+    navigate(`/${type}/${ref}`);
   };
 
-  const testSearchData: { name: string; type: Category }[] = [
-    { name: "lecleric", type: "driver" },
-    { name: "max", type: "driver" },
-    { name: "silverstone", type: "gp" },
-    { name: "toto", type: "constructor" },
-  ];
+  console.log(debouncedSearchText);
 
   return (
     <Layout
       heading="f1app"
-      searchData={testSearchData}
+      searchData={searchData || []}
       onResultClick={navigateSearch}
+      onChange={(input) => setSearchText(input)}
     >
       <Wrapper>
         {(seasonData && professionData && raceData && (

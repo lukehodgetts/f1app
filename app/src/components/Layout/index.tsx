@@ -2,11 +2,13 @@ import Footer from "../Footer";
 import Header from "../Header";
 
 import Category from "../../types/Category";
+import SearchResponse from "../../types/SearchResponse"
 
 interface Props {
   heading: string;
-  searchData: { name: string; type: Category }[];
-  onResultClick: (name: string, type: Category) => void;
+  searchData: SearchResponse;
+  onResultClick: (name: string, ref: string, type: Category, _id: string) => void;
+  onChange: (input: string) => void;
 }
 
 const Layout: React.FC<Props> = ({
@@ -14,6 +16,7 @@ const Layout: React.FC<Props> = ({
   children,
   searchData,
   onResultClick,
+  onChange
 }) => {
   return (
     <>
@@ -21,6 +24,7 @@ const Layout: React.FC<Props> = ({
         heading={heading}
         data={searchData}
         onResultClick={onResultClick}
+        onChange={onChange}
       />
       {children}
       <Footer />
