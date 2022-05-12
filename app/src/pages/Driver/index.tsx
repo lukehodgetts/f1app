@@ -1,17 +1,26 @@
 import { useEffect, useState } from "react";
 import { useDebounce } from "use-debounce";
-import { useNavigate, useLocation } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import useAxios from "axios-hooks";
 import useSearch from "../../hooks/useSearch";
 
 import Category from "../../types/Category";
+import DriverType from "../../types/Driver";
 
 import Layout from "../../components/Layout";
 
 const Driver = () => {
   let navigate = useNavigate();
-  const [searchText, setSearchText] = useState("");
+  let { ref } = useParams();
 
+  const [{ data, loading, error }, refetch] = useAxios<DriverType>({
+    url: `${process.env.REACT_APP_API_URL}/driver`,
+    params: {
+      ref: ref,
+    },
+  });
+
+  const [searchText, setSearchText] = useState("");
   const [debouncedSearchText] = useDebounce(searchText, 300);
 
   const {
@@ -29,9 +38,11 @@ const Driver = () => {
     navigate(`/${type}/${ref}`);
   };
 
+  console.log(data);
+
   return (
     <Layout
-      heading="f1app"
+      heading={`f1app - ${data?.driver.forename} ${data?.driver.surname}`}
       searchData={searchData || []}
       onResultClick={navigateSearch}
       onChange={(input) => setSearchText(input)}

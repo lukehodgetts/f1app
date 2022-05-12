@@ -7,6 +7,9 @@ import cors from "cors";
 import year from "./routes/year";
 import season from "./routes/season";
 import search from "./routes/search";
+import driver from "./routes/driver";
+import constructor from "./routes/constructor";
+import race from "./routes/race";
 import mysql from "./routes/mysql";
 
 const app = express();
@@ -22,6 +25,9 @@ app.use(express.json());
 app.use("/:year", year);
 app.use("/season", season);
 app.use("/search", search);
+app.use("/driver", driver);
+app.use("/constructor", constructor);
+app.use("/race", race);
 app.use("/mysql", mysql);
 
 app.listen(8080, () => console.log("Server Started"));

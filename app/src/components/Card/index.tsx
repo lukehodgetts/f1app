@@ -1,4 +1,4 @@
-import Race from "../../types/Race";
+import RaceDetails from "../../types/RaceDetails";
 import CardContainer from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
@@ -10,7 +10,7 @@ import images from "../../utils/circuitImages";
 import { Body, Title, Subtitle, Stat } from "./index.styles";
 
 interface Props {
-  data: Race;
+  data: RaceDetails;
   onClick: (raceName: string, raceYear: string) => void;
 }
 

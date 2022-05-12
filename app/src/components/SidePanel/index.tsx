@@ -1,5 +1,5 @@
-import Constructor from "../../types/Constructor";
-import Driver from "../../types/Driver";
+import ConstructorStandings from "../../types/ConstructorStandings";
+import DriverStandings from "../../types/DriverStandings";
 import Profession from "../../types/Profession";
 import Button from "@mui/material/Button";
 import Table from "@mui/material/Table";
@@ -18,7 +18,7 @@ import {
 } from "./index.styles";
 
 interface Props {
-  data: Constructor | Driver;
+  data: ConstructorStandings | DriverStandings;
   onClick: (type: "driver" | "constructor") => void;
   professionSelected: Profession;
 }

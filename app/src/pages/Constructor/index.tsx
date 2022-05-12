@@ -1,16 +1,26 @@
 import { useEffect, useState } from "react";
 import { useDebounce } from "use-debounce";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import useSearch from "../../hooks/useSearch";
 
 import Category from "../../types/Category";
+import ConstructorType from "../../types/ConstructorStandings";
 
 import Layout from "../../components/Layout";
+import useAxios from "axios-hooks";
 
 const Constructor = () => {
   let navigate = useNavigate();
-  const [searchText, setSearchText] = useState("");
+  let { ref } = useParams();
 
+  const [{ data, loading, error }, refetch] = useAxios<ConstructorType>({
+    url: `${process.env.REACT_APP_API_URL}/constructor`,
+    params: {
+      ref: ref,
+    },
+  });
+
+  const [searchText, setSearchText] = useState("");
   const [debouncedSearchText] = useDebounce(searchText, 300);
 
   const {

@@ -27,9 +27,9 @@ const App = () => {
           <Route path="/" element={<Homepage />} />
           <Route path="/telemetry" element={<Telemetry />} />
           <Route path="/race/:name/:year" element={<Race />} />
-          <Route path="/driver/:name" element={<Driver />} />
-          <Route path="/gp/:name" element={<GrandPrix />} />
-          <Route path="/constructor/:name" element={<Constructor />} />
+          <Route path="/driver/:ref" element={<Driver />} />
+          <Route path="/gp/:ref" element={<GrandPrix />} />
+          <Route path="/constructor/:ref" element={<Constructor />} />
         </Routes>
       </Router>
     </ThemeProvider>

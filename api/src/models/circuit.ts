@@ -1,6 +1,6 @@
 import mongoose, { Document } from "mongoose";
 
-interface Circuit extends Document {
+export interface Circuit extends Document {
   circuitId: number;
   circuitRef: string;
   name: string;
@@ -13,7 +13,7 @@ interface Circuit extends Document {
 }
 
 const circuitSchema = new mongoose.Schema({
-    circuitId: {
+  circuitId: {
     type: Number,
     required: true,
   },
@@ -33,26 +33,22 @@ const circuitSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  lat: {
-    type: String,
-    required: true,
-  },
-  lng: {
-    type: String,
-    required: true,
-  },
-  alt: {
-    type: String,
-    required: false,
-  },
+  // lat: {
+  //   type: String,
+  //   required: true,
+  // },
+  // lng: {
+  //   type: String,
+  //   required: true,
+  // },
+  // alt: {
+  //   type: String,
+  //   required: false,
+  // },
   url: {
     type: String,
     required: true,
   },
 });
 
-export default mongoose.model<Circuit>(
-  "Circuit",
-  circuitSchema,
-  "circuits"
-);
+export default mongoose.model<Circuit>("Circuit", circuitSchema, "circuits");

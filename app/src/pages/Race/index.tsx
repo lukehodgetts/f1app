@@ -1,7 +1,7 @@
 import { useNavigate, useParams } from "react-router";
 import useAxios from "axios-hooks";
 
-import RaceType from "../../types/Race";
+import RaceType from "../../types/RaceDetails";
 import ImageType from "../../types/Image";
 import Category from "../../types/Category";
 
@@ -67,13 +67,6 @@ const Race = () => {
   ) => {
     navigate(`/${type}/${ref}`);
   };
-
-  const testSearchData: { name: string; type: Category }[] = [
-    { name: "lecleric", type: "driver" },
-    { name: "max", type: "driver" },
-    { name: "silverstone", type: "gp" },
-    { name: "toto", type: "constructor" },
-  ];
 
   console.log(data);
   console.log(fastestLap?.fastestLapTime);

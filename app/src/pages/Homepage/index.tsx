@@ -5,10 +5,10 @@ import { useDebounce } from "use-debounce";
 import useSearch from "../../hooks/useSearch";
 
 import Profession from "../../types/Profession";
-import Driver from "../../types/Driver";
-import Constructor from "../../types/Constructor";
+import DriverStandings from "../../types/DriverStandings";
+import ConstructorStandings from "../../types/ConstructorStandings";
 import SeasonResponse from "../../types/SeasonResponse";
-import Race from "../../types/Race";
+import RaceDetails from "../../types/RaceDetails";
 import Category from "../../types/Category";
 import SearchResponse from "../../types/SearchResponse";
 
@@ -48,14 +48,14 @@ const Homepage = () => {
       error: professionError,
     },
     getProfessionData,
-  ] = useAxios<Driver | Constructor>({
+  ] = useAxios<DriverStandings | ConstructorStandings>({
     url: `${process.env.REACT_APP_API_URL}/${season}/${profession}`,
   });
 
   const [
     { data: raceData, loading: raceLoading, error: raceError },
     getRaceData,
-  ] = useAxios<Race[]>(`${process.env.REACT_APP_API_URL}/${season}/race`);
+  ] = useAxios<RaceDetails[]>(`${process.env.REACT_APP_API_URL}/${season}/race`);
 
   const {
     data: searchData,

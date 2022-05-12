@@ -1,22 +1,41 @@
 interface Driver {
-  type: "Driver";
-  DriverStandings: {
-    position: string;
-    points: string;
-    wins: string;
-    Driver: {
-      driverId: string;
-      permanentNumber: string;
-      code: string;
-      givenName: string;
-      familyName: string;
-      dateOfBirth: string;
-      nationality: string;
-    };
-    Constructors: {
+  driver: {
+    code: string;
+    dob: string;
+    driverId: number;
+    driverRef: string;
+    forename: string;
+    surname: string;
+    nationality: string;
+    number: number;
+    url: string;
+    _id: string;
+  };
+  results: {
+    driver: string;
+    team: {
+      _id: string;
+      constructorId: string;
+      constructorRef: string;
       name: string;
-    }[];
-  }[];
+      nationality: string;
+      url: string;
+    };
+    number?: number;
+    grid: number;
+    position?: number;
+    points: number;
+    laps: number;
+    time?: string;
+    fastestLap?: number;
+    rank?: number;
+    fastestLapTime?: string;
+    status: {
+      _id: string;
+      statusId: number;
+      status: string;
+    };
+  };
 }
 
 export default Driver;

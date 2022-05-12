@@ -41,7 +41,7 @@ router.get("/", async (req, res) => {
       $match: { name: search },
     },
     {
-      $project: { _id: 1, name: 1, type: 1 },
+      $project: { _id: 1, name: 1, ref: "$name", type: 1 },
     },
     {
       $group: { _id: "$name", doc: { $first: "$$ROOT" } },
