@@ -1,6 +1,6 @@
 import mongoose, { Document, Schema } from "mongoose";
 
-interface Result extends Document {
+export interface Result extends Document {
   resultId: number;
   race: string;
   driver: string;

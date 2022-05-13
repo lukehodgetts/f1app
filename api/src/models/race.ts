@@ -1,6 +1,6 @@
 import mongoose, { Document, Schema } from "mongoose";
 
-interface Race extends Document {
+export interface Race extends Document {
   raceId: number;
   year: string;
   round: number;
